@@ -21,33 +21,49 @@ var button = d3.select("#filter-btn");
 var form = d3.select("#form");
 
 // Create event handlers 
-button.on("click", runFilter);
-form.on("submit",runFilter);
+button.on("click", filterData);
+form.on("submit",filterData);
 
-function runFilter() {
 
-    // Prevent the page from refreshing
+function filterData() {
+
     d3.event.preventDefault();
     
     // Select the input element and get the raw HTML node
-    var inputElement = d3.select("#datetime");
+    var inputElement = d3.select("#filterType");
   
     // Get the value property of the input element
     var inputValue = inputElement.property("value");
+
+    var dropdownMenu = d3.select("#selFilter");
+    // Assign the value of the dropdown menu option to a variable
+
+    var filterSel = dropdownMenu.property("value");
+    // Initialize an empty array for the country's data
   
-    console.log(inputValue);
+    if (filterSel == 'Date/Time') {
+      var filteredData = tableData.filter(ufo => ufo.datetime === inputValue);
+    }
+    else if (dataset == 'City') {
+      var filteredData = tableData.filter(ufo => ufo.city === inputValue);
+    }
+    else if (dataset == 'State') {
+      var filteredData = tableData.filter(ufo => ufo.state === inputValue);
+    }
+    else if (dataset == 'Country') {
+      var filteredData = tableData.filter(ufo => ufo.country === inputValue);
+  }
+  else if (dataset == 'Shape') {
+    var filteredData = tableData.filter(ufo => ufo.shape === inputValue);
+  }
+
+  var select_data = d3.select("tbody");
   
-    var filteredData = tableData.filter(ufo => ufo.Date === inputValue);
+  select_data.html("");
   
-    console.log(filteredData);
+  // append stats to the list
+  select_data.append("tr").text(`${filteredData}`);
+
+  }
   
-    // Then, select the unordered list element by class name
-    var select_data = d3.select("tbody");
-  
-    // remove any children from the list to
-    select_data.html("");
-  
-    // append stats to the list
-    select_data.append("tr").text(`${filteredData}`);
-    
-  };
+
