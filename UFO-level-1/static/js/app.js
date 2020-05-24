@@ -37,8 +37,8 @@ function runFilter() {
   
     console.log(inputValue);
   
-    var filteredData = tableData.filter(ufo => ufo.Date === inputValue);
-  
+    var filteredData = tableData.filter(ufo => ufo.datetime == inputValue);
+    console.log(tableData);
     console.log(filteredData);
   
     // Then, select the unordered list element by class name
@@ -48,6 +48,13 @@ function runFilter() {
     select_data.html("");
   
     // append stats to the list
-    select_data.append("tr").text(`${filteredData}`);
+    filteredData.forEach((filteredDataRow) => {
+       var selectRow = select_data.append("tr");
+       Object.values(filteredDataRow).forEach((cell) => {
+           var selectCell = selectRow.append("td");
+           selectCell.text(cell);
+       }
+      )}
+    );
     
   };

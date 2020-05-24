@@ -41,29 +41,37 @@ function filterData() {
     var filterSel = dropdownMenu.property("value");
     // Initialize an empty array for the country's data
   
-    if (filterSel == 'Date/Time') {
-      var filteredData = tableData.filter(ufo => ufo.datetime === inputValue);
+    var filteredData = [];
+    if (filterSel == 'date/time') {
+      filteredData = tableData.filter(ufo => ufo.datetime === inputValue);
     }
-    else if (dataset == 'City') {
-      var filteredData = tableData.filter(ufo => ufo.city === inputValue);
+    else if (filterSel == 'city') {
+      filteredData = tableData.filter(ufo => ufo.city === inputValue);
     }
-    else if (dataset == 'State') {
-      var filteredData = tableData.filter(ufo => ufo.state === inputValue);
+    else if (filterSel == 'state') {
+      filteredData = tableData.filter(ufo => ufo.state === inputValue);
     }
-    else if (dataset == 'Country') {
-      var filteredData = tableData.filter(ufo => ufo.country === inputValue);
+    else if (filterSel == 'country') {
+      filteredData = tableData.filter(ufo => ufo.country === inputValue);
   }
-  else if (dataset == 'Shape') {
-    var filteredData = tableData.filter(ufo => ufo.shape === inputValue);
+    else if (filterSel == 'shape') {
+      filteredData = tableData.filter(ufo => ufo.shape === inputValue);
   }
 
   var select_data = d3.select("tbody");
-  
+
   select_data.html("");
   
   // append stats to the list
-  select_data.append("tr").text(`${filteredData}`);
+
+  filteredData.forEach((filteredDataRow) => {
+    var selectRow = select_data.append("tr");
+    Object.values(filteredDataRow).forEach((cell) => {
+        var selectCell = selectRow.append("td");
+        selectCell.text(cell);
+    }
+   )}
+ );
 
   }
-  
 
